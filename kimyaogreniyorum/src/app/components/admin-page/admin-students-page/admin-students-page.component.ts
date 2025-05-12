@@ -1,6 +1,7 @@
 
 import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
 
 interface User {
   id: number;
@@ -26,7 +27,8 @@ interface User {
   selector: 'app-admin-students-page',
   templateUrl: './admin-students-page.component.html',
   styleUrls: ['./admin-students-page.component.scss'],
-  standalone: false
+  standalone: true,
+  imports: [CommonModule, HttpClientModule]
 })
 export class AdminStudentsPageComponent implements OnInit {
   students: User[] = [];
@@ -48,7 +50,7 @@ export class AdminStudentsPageComponent implements OnInit {
   loadUsers(): void {
     this.isLoading = true;
     // Tüm kullanıcıları getir
-    this.http.get<any>('/api/admin/students').subscribe({
+    this.http.get<any>('./server/api/admin.php').subscribe({
       next: (response) => {
         console.log('API Yanıtı:', response);
         if (response.success) {
