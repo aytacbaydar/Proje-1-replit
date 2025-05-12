@@ -20,10 +20,12 @@ export class AdminStudentsPageComponent implements OnInit {
 
   loadStudents(): void {
     this.isLoading = true;
-    this.http.get<any>('/api/students').subscribe({
+    // Sadece öğrenci rolündeki kullanıcıları getir
+    this.http.get<any>('/api/admin/students').subscribe({
       next: (response) => {
         if (response.success) {
-          this.students = response.data;
+          // Öğrenci rolündekileri filtrele
+          this.students = response.data.filter(student => student.rutbe === 'ogrenci');
         }
         this.isLoading = false;
       },
