@@ -104,45 +104,7 @@
                 <h1>Dashboard</h1>
                 <p>Hoş Geldiniz, {{ admin.adi_soyadi || 'Yönetici' }}</p>
             </div>
-
-            <div class="dashboard-cards">
-                <div class="card">
-                    <div class="card-icon">
-                        <i class="bi bi-people"></i>
-                    </div>
-                    <div class="card-info">
-                        <h3>250</h3>
-                        <p>Toplam Öğrenci</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-icon">
-                        <i class="bi bi-person-video3"></i>
-                    </div>
-                    <div class="card-info">
-                        <h3>15</h3>
-                        <p>Toplam Öğretmen</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-icon">
-                        <i class="bi bi-book"></i>
-                    </div>
-                    <div class="card-info">
-                        <h3>12</h3>
-                        <p>Aktif Ders</p>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-icon">
-                        <i class="bi bi-currency-dollar"></i>
-                    </div>
-                    <div class="card-info">
-                        <h3>45,000₺</h3>
-                        <p>Aylık Gelir</p>
-                    </div>
-                </div>
-            </div>
+            <router-outlet></router-outlet>
         </div>
     </div>
 </div>
