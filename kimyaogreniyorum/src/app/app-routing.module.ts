@@ -37,8 +37,8 @@ const routes: Routes = [
     children: [
       {
         path: 'students',
-        loadChildren: () => import('./components/admin-page/admin-page.module')
-          .then(m => m.AdminPageModule)
+        component: () => import('./components/admin-page/admin-students-page/admin-students-page.component')
+          .then(m => m.AdminStudentsPageComponent)
       }
     ]
   },
