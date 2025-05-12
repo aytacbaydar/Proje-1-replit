@@ -22,14 +22,23 @@
         </div>
     </div>
 
-    <div class="students-table-container" *ngIf="!isLoading && students.length > 0">
-        <table class="students-table">
+    <div class="loading-spinner" *ngIf="isLoading">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Yükleniyor...</span>
+        </div>
+    </div>
+
+    <div class="table-responsive" *ngIf="!isLoading && students.length > 0">
+        <table class="table table-striped table-hover">
             <thead>
                 <tr>
                     <th>ID</th>
+                    <th>Profil</th>
                     <th>Adı Soyadı</th>
                     <th>Email</th>
                     <th>Telefon</th>
+                    <th>Okul</th>
+                    <th>Sınıf</th>
                     <th>Durum</th>
                     <th>İşlemler</th>
                 </tr>
@@ -37,38 +46,36 @@
             <tbody>
                 <tr *ngFor="let student of students">
                     <td>{{ student.id }}</td>
+                    <td class="student-avatar">
+                        <img [src]="student.avatar || 'assets/images/default-avatar.png'" alt="Öğrenci Avatar">
+                    </td>
                     <td>{{ student.adi_soyadi }}</td>
                     <td>{{ student.email }}</td>
-                    <td>{{ student.cep_telefonu || '-' }}</td>
+                    <td>{{ student.cep_telefonu }}</td>
+                    <td>{{ student.bilgiler?.okulu || '-' }}</td>
+                    <td>{{ student.bilgiler?.sinifi || '-' }}</td>
                     <td>
-                        <span class="status" [class.active]="student.aktif">
+                        <span class="badge" [ngClass]="student.aktif ? 'bg-success' : 'bg-danger'">
                             {{ student.aktif ? 'Aktif' : 'Pasif' }}
                         </span>
                     </td>
-                    <td class="actions">
-                        <button class="btn btn-sm btn-outline-primary">
-                            <i class="bi bi-pencil"></i>
-                        </button>
-                        <button class="btn btn-sm btn-outline-danger">
-                            <i class="bi bi-trash"></i>
-                        </button>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn btn-sm btn-outline-primary" title="Düzenle">
+                                <i class="bi bi-pencil"></i>
+                            </button>
+                            <button class="btn btn-sm btn-outline-danger" title="Sil">
+                                <i class="bi bi-trash"></i>
+                            </button>
+                        </div>
                     </td>
                 </tr>
             </tbody>
         </table>
     </div>
 
-    <div class="loading-container" *ngIf="isLoading">
-        <div class="spinner"></div>
-        <p>Öğrenciler yükleniyor...</p>
-    </div>
-
-    <div class="empty-state" *ngIf="!isLoading && students.length === 0">
-        <i class="bi bi-people"></i>
-        <h3>Henüz öğrenci bulunmuyor</h3>
-        <p>Yeni öğrenci ekleyerek başlayabilirsiniz</p>
-        <button class="btn btn-primary">
-            <i class="bi bi-plus"></i> Yeni Öğrenci Ekle
-        </button>
+    <div class="no-data" *ngIf="!isLoading && students.length === 0">
+        <i class="bi bi-search"></i>
+        <p>Hiç öğrenci bulunamadı.</p>
     </div>
 </div>
