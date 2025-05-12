@@ -20,22 +20,35 @@ export class AdminIndexPageComponent implements OnInit {
   constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit(): void {
-    // LocalStorage'dan kullanıcı bilgilerini al
-    const userStr = localStorage.getItem('user');
+    console.log('Admin sayfası başlatılıyor...');
+    
+    // LocalStorage ve sessionStorage'dan kullanıcı bilgilerini kontrol et
+    let userStr = localStorage.getItem('user');
+    
     if (!userStr) {
-      // Kullanıcı bilgisi yoksa login sayfasına yönlendir
+      console.log('LocalStorage\'da kullanıcı bulunamadı, sessionStorage kontrol ediliyor...');
+      userStr = sessionStorage.getItem('user');
+    }
+    
+    if (!userStr) {
+      console.log('Kullanıcı bilgisi bulunamadı, login sayfasına yönlendiriliyor.');
       this.router.navigate(['/']);
       return;
     }
 
     try {
+      console.log('Kullanıcı verisi:', userStr);
       const user = JSON.parse(userStr);
+      console.log('Ayrıştırılmış kullanıcı:', user);
       
       // Kullanıcı admin değilse yönlendir
       if (user.rutbe !== 'admin') {
+        console.log('Kullanıcı admin değil:', user.rutbe);
         this.router.navigate(['/']);
         return;
       }
+
+      console.log('Admin kullanıcısı doğrulandı:', user);
 
       // Kullanıcı bilgilerini ayarla
       this.admin = {
@@ -44,6 +57,7 @@ export class AdminIndexPageComponent implements OnInit {
         avatar: user.avatar || 'https://ui-avatars.com/api/?name=' + encodeURIComponent(user.adi_soyadi || 'Admin') + '&background=random'
       };
       
+      console.log('Admin bilgileri ayarlandı:', this.admin);
       this.isLoading = false;
     } catch (error) {
       console.error('Kullanıcı bilgileri ayrıştırılamadı:', error);
