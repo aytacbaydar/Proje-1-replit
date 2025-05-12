@@ -31,7 +31,7 @@ const routes: Routes = [
     path: 'admin',
     loadComponent() {
       return import(
-        './components/admin-page/admin-page/admin-index-page/admin-index-page.component'
+        './components/admin-page/admin-index-page/admin-index-page.component'
       ).then((m) => m.AdminIndexPageComponent);
     },
   },
@@ -39,6 +39,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

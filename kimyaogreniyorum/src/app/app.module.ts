@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { GeneralPageModule } from './components/general-page/general-page.module';
+import { AdminPageModule } from './components/admin-page/admin-page.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -17,6 +18,7 @@ import { GeneralPageModule } from './components/general-page/general-page.module
     ReactiveFormsModule,
 
     GeneralPageModule,
+    AdminPageModule
   ],
   providers: [provideClientHydration(withEventReplay())],
   bootstrap: [AppComponent],
