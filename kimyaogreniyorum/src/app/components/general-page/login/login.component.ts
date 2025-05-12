@@ -64,16 +64,12 @@ export class LoginComponent implements OnInit {
     // Send to server
     this.http.post<any>('./server/api/login.php', loginData).subscribe({
       next: (response) => {
-        console.log('Login yanıtı:', response);
-        
         if (response.success) {
           this.showNotification(
             'Başarılı',
             'Giriş başarılı. Yönlendiriliyorsunuz...',
             'success'
           );
-
-          console.log('Kullanıcı bilgileri:', response.data);
 
           // Store user info in localStorage if remember me is checked
           if (this.loginForm.value.remember) {
@@ -85,7 +81,6 @@ export class LoginComponent implements OnInit {
           // Navigate to appropriate page based on user role
           setTimeout(() => {
             const rutbe = response.data.rutbe;
-            console.log('Kullanıcı rütbesi:', rutbe);
             
             if (rutbe === 'admin') {
               this.router.navigate(['/admin']);
