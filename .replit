@@ -4,7 +4,7 @@ modules = ["nodejs-20", "php-8.2", "web"]
 channel = "stable-24_05"
 
 [workflows]
-runButton = "Run Both Services"
+runButton = "Run Frontend with Auto-Yes"
 
 [[workflows.workflow]]
 name = "Run Frontend"
@@ -40,8 +40,21 @@ mode = "parallel"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
-args = "cd kimyaogreniyorum && npm install -g @angular/cli && npm install && ng serve --host 0.0.0.0 --port 4200"
+args = "cd kimyaogreniyorum && npm install -g @angular/cli@19.1.1 && npm install && ng serve --host 0.0.0.0 --port 4200 --disable-host-check"
 
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "cd server && php -S 0.0.0.0:5000"
+
+[[workflows.workflow]]
+name = "Run Frontend with Auto-Yes"
+author = 99479
+mode = "sequential"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = 'cd kimyaogreniyorum && printf "y\n" | npm install -g @angular/cli@19.1.1 && npm install && ng serve --host 0.0.0.0 --port 4200 --disable-host-check'
+
+[[ports]]
+localPort = 5000
+externalPort = 80
