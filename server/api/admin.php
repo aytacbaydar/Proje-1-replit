@@ -1,36 +1,80 @@
 <?php
-// Admin yönetim API'si
+// Admin API'si
 require_once '../config.php';
 
-// Kullanıcı listesi
+// GET isteği: Tüm kullanıcıları getir
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     try {
         // Admin yetkisini kontrol et
-        authorizeAdmin();
-        
+        $user = authorizeAdmin();
+
         $conn = getConnection();
-        
-        // Tüm öğrencileri getir
+
+        // Tüm kullanıcıları getir
         $stmt = $conn->prepare("
-            SELECT o.id, o.adi_soyadi, o.email, o.cep_telefonu, o.rutbe, o.aktif, o.avatar, o.created_at,
-                   ob.okulu, ob.sinifi, ob.grubu, ob.ders_gunu, ob.ders_saati, ob.ucret
+            SELECT o.id, o.adi_soyadi, o.email, o.cep_telefonu, o.rutbe, o.aktif, o.avatar,
+                   o.created_at, ob.*
             FROM ogrenciler o
             LEFT JOIN ogrenci_bilgileri ob ON o.id = ob.ogrenci_id
             ORDER BY o.id DESC
         ");
         $stmt->execute();
-        
-        $students = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        
-        successResponse($students);
-        
+
+        $users = [];
+        while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
+            // Bilgiler nesnesini oluştur
+            $bilgiler = array_filter([
+                'okulu' => $row['okulu'] ?? null,
+                'sinifi' => $row['sinifi'] ?? null,
+                'brans' => $row['brans'] ?? null,
+                'kayit_tarihi' => $row['kayit_tarihi'] ?? null,
+                'grubu' => $row['grubu'] ?? null,
+                'ders_gunu' => $row['ders_gunu'] ?? null,
+                'ders_saati' => $row['ders_saati'] ?? null,
+                'ucret' => $row['ucret'] ?? null,
+                'veli_adi' => $row['veli_adi'] ?? null,
+                'veli_cep' => $row['veli_cep'] ?? null
+            ], function($value) {
+                return $value !== null;
+            });
+
+            // Ana kullanıcı nesnesini oluştur
+            $user = [
+                'id' => $row['id'],
+                'adi_soyadi' => $row['adi_soyadi'],
+                'email' => $row['email'],
+                'cep_telefonu' => $row['cep_telefonu'],
+                'rutbe' => $row['rutbe'],
+                'aktif' => (bool)$row['aktif'],
+                'avatar' => $row['avatar'],
+                'created_at' => $row['created_at']
+            ];
+
+            // Bilgiler varsa ekle
+            if (!empty($bilgiler)) {
+                $user['bilgiler'] = $bilgiler;
+            }
+
+            $users[] = $user;
+        }
+
+        successResponse($users);
+
     } catch (PDOException $e) {
         errorResponse('Veritabanı hatası: ' . $e->getMessage(), 500);
     } catch (Exception $e) {
         errorResponse('Beklenmeyen bir hata oluştu: ' . $e->getMessage(), 500);
     }
 }
-// Öğrenci silme
+// POST isteği: Yeni kullanıcı oluştur
+else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    // Admin yetkisini kontrol et
+    authorizeAdmin();
+
+    // register.php'yi çağır
+    require_once 'register.php';
+}
+// DELETE isteği: Kullanıcıyı sil
 else if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
     try {
         // Admin yetkisini kontrol et
@@ -42,7 +86,7 @@ else if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
         $studentId = intval(end($parts));
         
         if (!$studentId) {
-            errorResponse('Geçerli bir öğrenci ID'si belirtilmelidir');
+            errorResponse('Geçerli bir öğrenci ID\'si belirtilmelidir');
         }
         
         // Admin kendisini silemez
@@ -78,7 +122,7 @@ else if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
         
         successResponse(null, 'Öğrenci başarıyla silindi');
         
-    } catch (PDOException $e) {
+    }  catch (PDOException $e) {
         if (isset($conn) && $conn->inTransaction()) {
             $conn->rollBack();
         }
@@ -90,15 +134,8 @@ else if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
         errorResponse('Beklenmeyen bir hata oluştu: ' . $e->getMessage(), 500);
     }
 }
-// Yeni öğrenci ekleme (register.php aynı işlevi görüyor)
-else if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    // Admin yetkisini kontrol et
-    authorizeAdmin();
-    
-    // register.php'yi çağır
-    require_once 'register.php';
-}
 // Diğer HTTP metodlarını reddet
 else {
     errorResponse('Bu endpoint sadece GET, POST ve DELETE metodlarını desteklemektedir', 405);
 }
+?>
