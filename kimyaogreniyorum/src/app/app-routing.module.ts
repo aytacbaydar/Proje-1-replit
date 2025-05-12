@@ -34,6 +34,15 @@ const routes: Routes = [
         './components/admin-page/admin-index-page/admin-index-page.component'
       ).then((m) => m.AdminIndexPageComponent);
     },
+    children: [
+      {
+        path: 'ogrenciler',
+        loadComponent() {
+          return import('./components/admin-page/admin-students-page/admin-students-page.component')
+            .then(m => m.AdminStudentsPageComponent);
+        }
+      }
+    ]
   },
 ];
 
