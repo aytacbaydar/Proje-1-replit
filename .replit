@@ -4,7 +4,7 @@ modules = ["nodejs-20", "php-8.2", "web"]
 channel = "stable-24_05"
 
 [workflows]
-runButton = "Run Angular"
+runButton = "Run Both Services"
 
 [[workflows.workflow]]
 name = "Run Frontend"
@@ -32,3 +32,16 @@ mode = "sequential"
 [[workflows.workflow.tasks]]
 task = "shell.exec"
 args = "cd kimyaogreniyorum && npm install -g @angular/cli && npm install && ng serve --host 0.0.0.0 --port 4200"
+
+[[workflows.workflow]]
+name = "Run Both Services"
+author = 99479
+mode = "parallel"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd kimyaogreniyorum && npm install -g @angular/cli && npm install && ng serve --host 0.0.0.0 --port 4200"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd server && php -S 0.0.0.0:5000"
