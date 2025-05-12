@@ -5,7 +5,8 @@ import { HttpClient } from '@angular/common/http';
 @Component({
   selector: 'app-admin-students-page',
   templateUrl: './admin-students-page.component.html',
-  styleUrls: ['./admin-students-page.component.scss']
+  styleUrls: ['./admin-students-page.component.scss'],
+  standalone: false
 })
 export class AdminStudentsPageComponent implements OnInit {
   students: any[] = [];
