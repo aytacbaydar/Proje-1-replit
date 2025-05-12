@@ -1,0 +1,74 @@
+
+<div class="students-container">
+    <div class="page-header">
+        <h1>Öğrenciler</h1>
+        <button class="btn btn-primary">
+            <i class="bi bi-plus"></i> Yeni Öğrenci
+        </button>
+    </div>
+
+    <div class="filters">
+        <div class="search-bar">
+            <i class="bi bi-search"></i>
+            <input type="text" placeholder="Öğrenci ara...">
+        </div>
+        <div class="filter-buttons">
+            <button class="btn btn-outline-secondary">
+                <i class="bi bi-funnel"></i> Filtrele
+            </button>
+            <button class="btn btn-outline-secondary">
+                <i class="bi bi-sort-down"></i> Sırala
+            </button>
+        </div>
+    </div>
+
+    <div class="students-table-container" *ngIf="!isLoading && students.length > 0">
+        <table class="students-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Adı Soyadı</th>
+                    <th>Email</th>
+                    <th>Telefon</th>
+                    <th>Durum</th>
+                    <th>İşlemler</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let student of students">
+                    <td>{{ student.id }}</td>
+                    <td>{{ student.adi_soyadi }}</td>
+                    <td>{{ student.email }}</td>
+                    <td>{{ student.cep_telefonu || '-' }}</td>
+                    <td>
+                        <span class="status" [class.active]="student.aktif">
+                            {{ student.aktif ? 'Aktif' : 'Pasif' }}
+                        </span>
+                    </td>
+                    <td class="actions">
+                        <button class="btn btn-sm btn-outline-primary">
+                            <i class="bi bi-pencil"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="loading-container" *ngIf="isLoading">
+        <div class="spinner"></div>
+        <p>Öğrenciler yükleniyor...</p>
+    </div>
+
+    <div class="empty-state" *ngIf="!isLoading && students.length === 0">
+        <i class="bi bi-people"></i>
+        <h3>Henüz öğrenci bulunmuyor</h3>
+        <p>Yeni öğrenci ekleyerek başlayabilirsiniz</p>
+        <button class="btn btn-primary">
+            <i class="bi bi-plus"></i> Yeni Öğrenci Ekle
+        </button>
+    </div>
+</div>

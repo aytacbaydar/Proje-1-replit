@@ -33,7 +33,21 @@ const routes: Routes = [
       return import(
         './components/admin-page/admin-index-page/admin-index-page.component'
       ).then((m) => m.AdminIndexPageComponent);
-    }, 
+    },
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./components/admin-page/admin-dashboard/admin-dashboard.routes')
+          .then(m => m.ADMIN_DASHBOARD_ROUTES)
+      },
+      {
+        path: 'ogrenciler',
+        loadComponent() {
+          return import('./components/admin-page/admin-students-page/admin-students-page.component')
+            .then(m => m.AdminStudentsPageComponent);
+        }
+      }
+    ]
   },
 ];
 
