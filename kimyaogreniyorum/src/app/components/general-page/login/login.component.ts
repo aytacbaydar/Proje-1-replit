@@ -60,7 +60,7 @@ export class LoginComponent implements OnInit {
     };
 
     // Send to server
-    this.http.post<any>('./server/api/login.php', loginData).subscribe({
+    this.http.post<any>('/server/api/login.php', loginData).subscribe({
       next: (response) => {
         if (response.success) {
           this.showNotification(
