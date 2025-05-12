@@ -49,8 +49,19 @@ export class AdminStudentsPageComponent implements OnInit {
 
   loadUsers(): void {
     this.isLoading = true;
+    
+    // LocalStorage veya sessionStorage'dan token'ı al
+    let token = '';
+    const userStr = localStorage.getItem('user') || sessionStorage.getItem('user');
+    if (userStr) {
+      const user = JSON.parse(userStr);
+      token = user.token || '';
+    }
+    
     // Tüm kullanıcıları getir
-    this.http.get<any>('./server/api/admin.php').subscribe({
+    this.http.get<any>('./server/api/admin.php', {
+      headers: { 'Authorization': `Bearer ${token}` }
+    }).subscribe({
       next: (response) => {
         console.log('API Yanıtı:', response);
         if (response.success) {
