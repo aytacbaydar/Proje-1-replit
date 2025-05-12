@@ -48,7 +48,7 @@ export class AdminStudentsPageComponent implements OnInit {
   loadUsers(): void {
     this.isLoading = true;
     // Tüm kullanıcıları getir
-    this.http.get<any>('/api/admin/students').subscribe({
+    this.http.get<any>('api/admin/students').subscribe({
       next: (response) => {
         console.log('API Yanıtı:', response);
         if (response.success) {
