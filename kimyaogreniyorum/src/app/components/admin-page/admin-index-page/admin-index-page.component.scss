@@ -25,6 +25,16 @@
     width: 80px;
 }
 
+.sidebar.collapsed .logo span, 
+.sidebar.collapsed .user-info, 
+.sidebar.collapsed .sidebar-menu span {
+    display: none;
+}
+
+.sidebar.collapsed .sidebar-menu i {
+    margin-right: 0;
+}
+
 .sidebar-header {
     display: flex;
     align-items: center;
