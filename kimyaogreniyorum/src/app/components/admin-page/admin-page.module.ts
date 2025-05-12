@@ -6,6 +6,10 @@ import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [AdminIndexPageComponent],
-  imports: [CommonModule, RouterModule, HttpClientModule],
+  imports: [
+    CommonModule, 
+    RouterModule,
+    HttpClientModule
+  ],
 })
 export class AdminPageModule {}

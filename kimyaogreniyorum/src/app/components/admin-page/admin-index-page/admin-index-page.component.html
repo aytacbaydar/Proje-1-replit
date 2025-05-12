@@ -11,13 +11,18 @@
             </button>
         </div>
 
-        <div class="sidebar-user" *ngIf="sidebarExpanded">
+        <div class="sidebar-user" *ngIf="sidebarExpanded && !isLoading">
             <div class="user-avatar">
                 <img [src]="admin.avatar" alt="Admin Avatar">
             </div>
             <div class="user-info">
                 <h4>{{ admin.adi_soyadi }}</h4>
                 <span>Admin</span>
+            </div>
+        </div>
+        <div class="sidebar-user" *ngIf="sidebarExpanded && isLoading">
+            <div class="user-info">
+                <h4>Yükleniyor...</h4>
             </div>
         </div>
 
@@ -50,11 +55,14 @@
                 <h1 class="page-title">Admin Paneli</h1>
             </div>
             <div class="navbar-right">
-                <div class="admin-profile">
+                <div class="admin-profile" *ngIf="!isLoading">
                     <span class="admin-name">{{ admin.adi_soyadi }}</span>
                     <div class="admin-avatar">
                         <img [src]="admin.avatar" alt="Admin Avatar">
                     </div>
+                </div>
+                <div class="admin-profile" *ngIf="isLoading">
+                    <span class="admin-name">Yükleniyor...</span>
                 </div>
             </div>
         </nav>
