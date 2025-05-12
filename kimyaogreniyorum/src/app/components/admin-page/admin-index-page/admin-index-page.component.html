@@ -2,12 +2,8 @@
     <div class="sidebar" [class.collapsed]="!sidebarExpanded">
         <div class="sidebar-header">
             <div class="logo">
-                <img src="assets/images/logo.png" alt="Logo">
                 <span>Kimya Öğreniyorum</span>
             </div>
-            <button class="toggle-button" (click)="toggleSidebar()">
-                <i class="bi bi-list"></i>
-            </button>
         </div>
 
         <div class="user-container">
@@ -73,10 +69,6 @@
                 <button class="navbar-toggle" (click)="toggleSidebar()">
                     <i class="bi bi-list"></i>
                 </button>
-                <div class="search-bar">
-                    <i class="bi bi-search"></i>
-                    <input type="text" placeholder="Ara...">
-                </div>
             </div>
             <div class="navbar-right">
                 <div class="nav-item">
@@ -100,10 +92,6 @@
         </div>
 
         <div class="dashboard-content">
-            <div class="page-header">
-                <h1>Dashboard</h1>
-                <p>Hoş Geldiniz, {{ admin.adi_soyadi || 'Yönetici' }}</p>
-            </div>
             <router-outlet></router-outlet>
         </div>
     </div>
