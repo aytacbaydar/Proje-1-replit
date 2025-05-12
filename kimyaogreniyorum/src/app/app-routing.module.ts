@@ -33,7 +33,7 @@ const routes: Routes = [
       return import(
         './components/admin-page/admin-index-page/admin-index-page.component'
       ).then((m) => m.AdminIndexPageComponent);
-    },
+    }, 
   },
 ];
 
