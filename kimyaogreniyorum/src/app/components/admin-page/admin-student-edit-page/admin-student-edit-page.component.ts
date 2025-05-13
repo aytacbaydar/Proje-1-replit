@@ -1,11 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { HttpClient, HttpHeaders, HttpClientModule } from '@angular/common/http';
+import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-admin-student-edit-page',
-  standalone: false,
+  standalone: true,
+  imports: [CommonModule, HttpClientModule, ReactiveFormsModule, FormsModule, RouterModule],
   templateUrl: './admin-student-edit-page.component.html',
   styleUrl: './admin-student-edit-page.component.scss'
 })
