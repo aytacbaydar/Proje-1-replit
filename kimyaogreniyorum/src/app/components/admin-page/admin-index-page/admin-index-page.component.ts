@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrl: './admin-index-page.component.scss',
 })
 export class AdminIndexPageComponent implements OnInit {
-  sidebarExpanded = true;
+  sidebarExpanded = false;
   admin = {
     adi_soyadi: '',
     email: '',

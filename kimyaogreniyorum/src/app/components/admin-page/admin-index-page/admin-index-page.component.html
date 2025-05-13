@@ -4,8 +4,8 @@
             <div class="logo">
                 <span>Kimya Öğreniyorum</span>
             </div>
-            <a class="navbar-toggle"                                         (click)="toggleSidebar()">
-                <i class="bi bi-arrow-bar-left"></i>
+            <a class="navbar-toggle" (click)="toggleSidebar()">
+                <i class="bi" [ngClass]="sidebarExpanded ? 'bi-arrow-bar-left' : 'bi-arrow-bar-right'"></i>
             </a>
         </div>
 
