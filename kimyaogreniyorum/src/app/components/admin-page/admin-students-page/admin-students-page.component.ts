@@ -63,28 +63,16 @@ export class AdminStudentsPageComponent implements OnInit {
       headers: { 'Authorization': `Bearer ${token}` }
     }).subscribe({
       next: (response) => {
-        console.log('API Yanıtı:', response);
         if (response.success) {
           // Kullanıcıları rütbelerine göre filtrele
           this.students = response.data.filter((user: User) => user.rutbe === 'ogrenci');
           this.teachers = response.data.filter((user: User) => user.rutbe === 'ogretmen');
           this.newUsers = response.data.filter((user: User) => user.rutbe === 'yeni');
-          
-          // Her bir türden bir kullanıcı bilgisini detaylı göster
-          if (this.students.length > 0) {
-            console.log('Öğrenci Örneği:', this.students[0]);
-          }
-          if (this.teachers.length > 0) {
-            console.log('Öğretmen Örneği:', this.teachers[0]);
-          }
-          if (this.newUsers.length > 0) {
-            console.log('Yeni Kayıt Örneği:', this.newUsers[0]);
-          }
         }
         this.isLoading = false;
       },
       error: (error) => {
-        console.error('Kullanıcılar yüklenirken hata oluştu:', error);
+        // Hata durumunda sadece loading durumunu güncelle
         this.isLoading = false;
       }
     });

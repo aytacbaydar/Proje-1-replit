@@ -73,7 +73,7 @@
                 <div class="admin-profile" *ngIf="!isLoading">
                     <span class="admin-name">{{ admin.adi_soyadi }}</span>
                     <div class="admin-avatar">
-                        <img [src]="admin.avatar" alt="Admin Avatar">
+                        <img [src]="admin.avatar" (click)="toggleSidebar()" alt="Admin Avatar">
                     </div>
                 </div>
                 <div class="admin-profile" *ngIf="isLoading">
