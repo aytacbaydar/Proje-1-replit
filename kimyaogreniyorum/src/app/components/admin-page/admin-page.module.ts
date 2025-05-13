@@ -7,16 +7,6 @@ import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AdminStudentsPageComponent } from './admin-students-page/admin-students-page.component';
 import { AdminStudentEditPageComponent } from './admin-student-edit-page/admin-student-edit-page.component';
 
-const routes: Routes = [
-  {
-    path: '',
-    component: AdminStudentsPageComponent
-  },
-  {
-    path: 'edit/:id',
-    component: AdminStudentEditPageComponent
-  }
-];
 
 @NgModule({
   declarations: [
@@ -26,7 +16,6 @@ const routes: Routes = [
   ],
   imports: [
     CommonModule,
-    RouterModule.forChild(routes),
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule
