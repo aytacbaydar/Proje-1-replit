@@ -38,7 +38,11 @@ const routes: Routes = [
     children: [
       {
         path: 'students',
-        loadChildren: () => import('./components/admin-page/admin-page.module').then(m => m.AdminPageModule)
+        loadComponent: () => import('./components/admin-page/admin-students-page/admin-students-page.component').then(m => m.AdminStudentsPageComponent)
+      },
+      {
+        path: 'students/edit/:id',
+        loadComponent: () => import('./components/admin-page/admin-student-edit-page/admin-student-edit-page.component').then(m => m.AdminStudentEditPageComponent)
       }
     ]
   },
