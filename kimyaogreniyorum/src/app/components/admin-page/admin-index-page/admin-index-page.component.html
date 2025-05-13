@@ -2,11 +2,10 @@
     <div class="sidebar" [class.collapsed]="!sidebarExpanded">
         <div class="sidebar-header">
             <div class="logo">
-                <span>Kimya Öğreniyorum</span>
+                <div class="logo">
+                    <img src="siyah-turuncu.png"  (click)="toggleSidebar()" alt="" width="100%" height="100%" style="cursor : pointer">
+                </div>
             </div>
-            <button class="navbar-toggle" (click)="toggleSidebar()">
-                <i class="bi" [ngClass]="sidebarExpanded ? 'bi-arrow-bar-left' : 'bi-arrow-bar-right'"></i>
-            </button>
         </div>
 
         <div class="sidebar-menu">
