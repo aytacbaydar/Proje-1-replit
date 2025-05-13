@@ -144,7 +144,10 @@ export class AdminStudentEditPageComponent implements OnInit {
           this.student.avatar = e.target.result;
         }
       };
-      reader.readAsDataURL(this.selectedFile);
+      // Null kontrolü ekle
+      if (this.selectedFile) {
+        reader.readAsDataURL(this.selectedFile);
+      }
     }
   }
 
@@ -229,13 +232,14 @@ export class AdminStudentEditPageComponent implements OnInit {
       
       this.http.post<any>('./server/api/upload.php', formData, { headers }).subscribe({
         next: (response) => {
-          if (response.success && response.file_url) {
-            resolve(response.file_url);
+          if (response.success && response.data && response.data.file_url) {
+            resolve(response.data.file_url);
           } else {
             reject(response.error || 'Dosya yüklenemedi.');
           }
         },
         error: (error) => {
+          console.error('Avatar yükleme hatası:', error);
           reject(error.message || 'Bağlantı hatası.');
         }
       });

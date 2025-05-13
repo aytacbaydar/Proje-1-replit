@@ -77,4 +77,8 @@ export class AdminStudentsPageComponent implements OnInit {
       }
     });
   }
+
+  editStudent(id: number): void {
+    this.router.navigate(['/admin/students/edit', id]);
+  }
 }
