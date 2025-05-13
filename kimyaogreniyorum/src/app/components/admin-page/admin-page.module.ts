@@ -1,12 +1,22 @@
-
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AdminIndexPageComponent } from './admin-index-page/admin-index-page.component';
-import { RouterModule } from '@angular/router';
+import { RouterModule, Routes } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { AdminStudentsPageComponent } from './admin-students-page/admin-students-page.component';
 import { AdminStudentEditPageComponent } from './admin-student-edit-page/admin-student-edit-page.component';
+
+const routes: Routes = [
+  {
+    path: '',
+    component: AdminStudentsPageComponent
+  },
+  {
+    path: 'edit/:id',
+    component: AdminStudentEditPageComponent
+  }
+];
 
 @NgModule({
   declarations: [
@@ -15,8 +25,8 @@ import { AdminStudentEditPageComponent } from './admin-student-edit-page/admin-s
     AdminStudentEditPageComponent
   ],
   imports: [
-    CommonModule, 
-    RouterModule,
+    CommonModule,
+    RouterModule.forChild(routes),
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule
