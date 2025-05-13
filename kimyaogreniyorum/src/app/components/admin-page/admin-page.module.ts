@@ -16,6 +16,7 @@ import { AdminStudentEditPageComponent } from './admin-student-edit-page/admin-s
   ],
   imports: [
     CommonModule,
+    RouterModule,
     HttpClientModule,
     ReactiveFormsModule,
     FormsModule
