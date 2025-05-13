@@ -1,14 +1,13 @@
-
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { FormBuilder, FormGroup, Validators, AbstractControl, ValidationErrors } from '@angular/forms';
 
 @Component({
   selector: 'app-admin-student-edit-page',
+  standalone: false,
   templateUrl: './admin-student-edit-page.component.html',
-  styleUrls: ['./admin-student-edit-page.component.scss'],
-  standalone: false
+  styleUrl: './admin-student-edit-page.component.scss'
 })
 export class AdminStudentEditPageComponent implements OnInit {
   studentId: number = 0;
@@ -29,7 +28,7 @@ export class AdminStudentEditPageComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForm();
-    
+
     this.route.paramMap.subscribe(params => {
       const id = params.get('id');
       if (id) {
@@ -51,7 +50,7 @@ export class AdminStudentEditPageComponent implements OnInit {
       aktif: [true],
       sifre: [''],
       sifre_tekrar: [''],
-      
+
       // Eğitim bilgileri
       okulu: [''],
       sinifi: [''],
@@ -59,7 +58,7 @@ export class AdminStudentEditPageComponent implements OnInit {
       ders_gunu: [''],
       ders_saati: [''],
       ucret: [''],
-      
+
       // Veli bilgileri
       veli_adi: [''],
       veli_cep: ['']
@@ -69,18 +68,18 @@ export class AdminStudentEditPageComponent implements OnInit {
   passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
     const password = control.get('sifre');
     const confirmPassword = control.get('sifre_tekrar');
-    
+
     if (password && confirmPassword && password.value && password.value !== confirmPassword.value) {
       return { 'passwordMismatch': true };
     }
-    
+
     return null;
   }
 
   loadStudentData(): void {
     this.isLoading = true;
     this.error = null;
-    
+
     // LocalStorage veya sessionStorage'dan token'ı al
     let token = '';
     const userStr = localStorage.getItem('user') || sessionStorage.getItem('user');
@@ -88,16 +87,16 @@ export class AdminStudentEditPageComponent implements OnInit {
       const user = JSON.parse(userStr);
       token = user.token || '';
     }
-    
+
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
-    
+
     this.http.get<any>(`./server/api/student.php?id=${this.studentId}`, { headers }).subscribe({
       next: (response) => {
         if (response.success) {
           this.student = response.data;
-          
+
           // Form'u doldur
           this.editForm.patchValue({
             // Temel bilgiler
@@ -105,7 +104,7 @@ export class AdminStudentEditPageComponent implements OnInit {
             email: this.student.email || '',
             cep_telefonu: this.student.cep_telefonu || '',
             aktif: this.student.aktif || false,
-            
+
             // Eğitim bilgileri
             okulu: this.student.bilgiler?.okulu || '',
             sinifi: this.student.bilgiler?.sinifi || '',
@@ -113,12 +112,12 @@ export class AdminStudentEditPageComponent implements OnInit {
             ders_gunu: this.student.bilgiler?.ders_gunu || '',
             ders_saati: this.student.bilgiler?.ders_saati || '',
             ucret: this.student.bilgiler?.ucret || '',
-            
+
             // Veli bilgileri
             veli_adi: this.student.bilgiler?.veli_adi || '',
             veli_cep: this.student.bilgiler?.veli_cep || ''
           });
-          
+
           this.isLoading = false;
         } else {
           this.isLoading = false;
@@ -136,7 +135,7 @@ export class AdminStudentEditPageComponent implements OnInit {
     const files = event.target.files;
     if (files && files.length > 0) {
       this.selectedFile = files[0];
-      
+
       // Avatar önizleme güncelleme
       const reader = new FileReader();
       reader.onload = (e) => {
@@ -160,11 +159,11 @@ export class AdminStudentEditPageComponent implements OnInit {
       });
       return;
     }
-    
+
     this.isSubmitting = true;
     this.error = null;
     this.success = null;
-    
+
     // LocalStorage veya sessionStorage'dan token'ı al
     let token = '';
     const userStr = localStorage.getItem('user') || sessionStorage.getItem('user');
@@ -172,7 +171,7 @@ export class AdminStudentEditPageComponent implements OnInit {
       const user = JSON.parse(userStr);
       token = user.token || '';
     }
-    
+
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${token}`
     });
@@ -181,12 +180,12 @@ export class AdminStudentEditPageComponent implements OnInit {
     this.uploadAvatar().then(avatarUrl => {
       // Form verilerini hazırla
       const formData = this.prepareFormData(avatarUrl);
-      
+
       // API'ye gönder
       this.http.post<any>('./server/api/update_profile.php', formData, { headers }).subscribe({
         next: (response) => {
           this.isSubmitting = false;
-          
+
           if (response.success) {
             this.success = 'Öğrenci bilgileri başarıyla güncellendi.';
             // Güncel verileri tekrar yükle
@@ -214,7 +213,7 @@ export class AdminStudentEditPageComponent implements OnInit {
         resolve(this.student.avatar || '');
         return;
       }
-      
+
       // LocalStorage veya sessionStorage'dan token'ı al
       let token = '';
       const userStr = localStorage.getItem('user') || sessionStorage.getItem('user');
@@ -222,14 +221,14 @@ export class AdminStudentEditPageComponent implements OnInit {
         const user = JSON.parse(userStr);
         token = user.token || '';
       }
-      
+
       const formData = new FormData();
       formData.append('file', this.selectedFile);
-      
+
       const headers = new HttpHeaders({
         'Authorization': `Bearer ${token}`
       });
-      
+
       this.http.post<any>('./server/api/upload.php', formData, { headers }).subscribe({
         next: (response) => {
           if (response.success && response.data && response.data.file_url) {
@@ -248,7 +247,7 @@ export class AdminStudentEditPageComponent implements OnInit {
 
   prepareFormData(avatarUrl: string): any {
     const formValues = this.editForm.value;
-    
+
     const data: any = {
       id: this.studentId,
       temel_bilgiler: {
@@ -268,17 +267,17 @@ export class AdminStudentEditPageComponent implements OnInit {
         veli_cep: formValues.veli_cep
       }
     };
-    
+
     // Avatar ekle (eğer güncellendiyse)
     if (avatarUrl) {
       data.temel_bilgiler.avatar = avatarUrl;
     }
-    
+
     // Şifre ekle (eğer değiştirildiyse)
     if (formValues.sifre) {
       data.temel_bilgiler.sifre = formValues.sifre;
     }
-    
+
     return data;
   }
 

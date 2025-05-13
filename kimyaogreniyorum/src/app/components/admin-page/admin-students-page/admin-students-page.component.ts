@@ -1,7 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+
+@Component({
+  selector: 'app-admin-students-page',
+  templateUrl: './admin-students-page.component.html',
+  styleUrls: ['./admin-students-page.component.scss'],
+  standalone: false
+})
 
 interface User {
   id: number;
