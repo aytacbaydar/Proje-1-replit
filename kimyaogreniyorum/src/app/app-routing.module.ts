@@ -1,56 +1,49 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, withComponentInputBinding } from '@angular/router';
+import { AdminIndexPageComponent } from './components/admin-page/admin-index-page/admin-index-page.component';
+import { AdminStudentEditPageComponent } from './components/admin-page/admin-student-edit-page/admin-student-edit-page.component';
 
 const routes: Routes = [
-  {
-    path: '',
-    loadComponent() {
-      return import('./components/general-page/login/login.component').then(
-        (m) => m.LoginComponent
-      );
-    },
-    pathMatch: 'full',
-  },
-  {
-    path: 'register',
-    loadComponent() {
-      return import(
-        './components/general-page/register/register.component'
-      ).then((m) => m.RegisterComponent);
-    },
-  },
-  {
-    path: 'confirmation',
-    loadComponent() {
-      return import(
-        './components/general-page/confirmation/confirmation.component'
-      ).then((m) => m.ConfirmationComponent);
-    },
-  },
+  // Admin routes
   {
     path: 'admin',
-    loadComponent() {
-      return import(
-        './components/admin-page/admin-index-page/admin-index-page.component'
-      ).then((m) => m.AdminIndexPageComponent);
-    },
+    component: AdminIndexPageComponent,
     children: [
       {
+        path: '',
+        loadChildren: () => import('./components/admin-page/admin-dashboard-page/admin-dashboard-page.module').then(m => m.AdminDashboardPageModule)
+      },
+      {
         path: 'students',
-        loadComponent: () => import('./components/admin-page/admin-students-page/admin-students-page.component')
-          .then(m => m.AdminStudentsPageComponent)
+        loadChildren: () => import('./components/admin-page/admin-students-page/admin-students-page.module').then(m => m.AdminStudentsPageModule)
       },
       {
         path: 'students/edit/:id',
-        loadComponent: () => import('./components/admin-page/admin-student-edit-page/admin-student-edit-page.component')
-          .then(m => m.AdminStudentEditPageComponent)
+        component: AdminStudentEditPageComponent
       }
     ]
   },
+
+  // Ana güzergahlar
+  {
+    path: '',
+    loadChildren: () => import('./components/general-page/general-page.module').then(m => m.GeneralPageModule)
+  },
+
+  // Bilinmeyen güzergahlar için çözüm
+  { 
+    path: '**', 
+    redirectTo: '/'
+  }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
+  imports: [
+    RouterModule.forRoot(routes, { 
+      initialNavigation: 'enabledBlocking',
+      bindToComponentInputs: true
+    })
+  ],
+  exports: [RouterModule]
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

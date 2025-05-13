@@ -1,17 +1,15 @@
+export const serverRoutes = {
+  // Prerendering olmayan statik yollar için varsayılan olarak SSR kullanılır
+  defaultRenderMode: 'ssr',
+  routes: [
+    // SSR ile render edilmesini istediğiniz yollar
+    { path: '/', renderMode: 'ssr' },
+    { path: '/login', renderMode: 'ssr' },
+    { path: '/register', renderMode: 'ssr' },
 
-import { RenderMode, ServerRoute } from '@angular/ssr';
-
-export const serverRoutes: ServerRoute[] = [
-  {
-    path: 'admin/students/edit/:id',
-    renderMode: RenderMode.Prerender,
-    getPrerenderParams: () => {
-      // Örnek ID'ler döndürülebilir veya veritabanından çekilebilir
-      return Promise.resolve([{ id: '1' }]);
-    }
-  },
-  {
-    path: '**',
-    renderMode: RenderMode.Prerender
-  }
-];
+    // Tamamen statik olarak sunucuda render edilmesini istediğiniz yollar
+    { path: '/admin', renderMode: 'ssr' },
+    { path: '/admin/students', renderMode: 'ssr' },
+    { path: 'admin/students/edit/:id', renderMode: 'ssr' },
+  ],
+};
