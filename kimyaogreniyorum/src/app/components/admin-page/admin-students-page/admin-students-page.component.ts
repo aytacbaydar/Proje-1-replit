@@ -28,7 +28,7 @@ interface User {
   selector: 'app-admin-students-page',
   templateUrl: './admin-students-page.component.html',
   styleUrls: ['./admin-students-page.component.scss'],
-  standalone: false,
+  standalone: false
 })
 export class AdminStudentsPageComponent implements OnInit {
   students: User[] = [];
