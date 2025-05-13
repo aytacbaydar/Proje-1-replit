@@ -168,6 +168,8 @@
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
   margin-bottom: 32px;
+  width: 100%;
+  max-width: 100%;
   
   /* Tablo gölgelendirme efekti */
   background: 
@@ -179,6 +181,11 @@
   background-size: 40px 100%, 40px 100%, 14px 100%, 14px 100%;
   background-position: 0 0, 100% 0, 0 0, 100% 0;
   background-attachment: local, local, scroll, scroll;
+  
+  @media (max-width: 576px) {
+    font-size: 12px;
+    background-size: 30px 100%, 30px 100%, 10px 100%, 10px 100%;
+  }
 }
 
 .table {
@@ -208,7 +215,23 @@
     font-size: 14px;
     
     th, td {
-      padding: 10px 12px;
+      padding: 10px 8px;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    font-size: 12px;
+    min-width: 500px;
+    
+    th, td {
+      padding: 8px 5px;
+    }
+    
+    th:nth-child(1), /* ID */
+    td:nth-child(1),
+    th:nth-child(5), /* Telefon */
+    td:nth-child(5) {
+      display: none;
     }
   }
 }
@@ -260,6 +283,22 @@
       }
     }
   }
+  
+  @media (max-width: 576px) {
+    flex-direction: row;
+    gap: 3px;
+    
+    .btn {
+      padding: 2px 4px;
+      font-size: 11px;
+      min-width: auto;
+      
+      i {
+        font-size: 10px;
+        margin-right: 0;
+      }
+    }
+  }
 }
 
 .no-data {
@@ -300,16 +339,50 @@
 
 /* Mobil görünüm düzeltmeleri için ek stiller */
 @media (max-width: 576px) {
-  .action-buttons {
-    flex-direction: column;
-    gap: 5px;
-    
-    .btn {
-      width: 100%;
+  .section-title {
+    font-size: 16px;
+  }
+  
+  .tab-navigation {
+    .nav-link {
+      padding: 8px 10px;
+      font-size: 12px;
+      
+      i {
+        margin-right: 3px;
+        font-size: 12px;
+      }
+      
+      .badge {
+        margin-left: 3px;
+        font-size: 8px;
+        padding: 2px 4px;
+      }
     }
   }
   
-  .section-title {
-    font-size: 16px;
+  .filters {
+    .filter-buttons {
+      .btn {
+        font-size: 12px;
+        padding: 6px 8px;
+        
+        i {
+          font-size: 12px;
+          margin-right: 4px;
+        }
+      }
+    }
+  }
+  
+  .badge {
+    font-size: 10px;
+    padding: 2px 4px;
+  }
+  
+  .user-avatar img {
+    width: 25px;
+    height: 25px;
+    border-width: 1px;
   }
 }
