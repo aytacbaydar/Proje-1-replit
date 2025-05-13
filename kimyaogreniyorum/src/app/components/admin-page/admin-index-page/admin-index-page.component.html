@@ -59,7 +59,9 @@
     <div class="content-wrapper">
         <div class="navbar">
             <div class="navbar-left">
-                
+                <button class="mobile-sidebar-toggle" (click)="toggleSidebar()">
+                  <i class="bi bi-list"></i>
+                </button>
             </div>
             <div class="navbar-right">
                 <div class="nav-item">
@@ -72,7 +74,7 @@
                 </div>
                 <div class="admin-profile" *ngIf="!isLoading">
                     <span class="admin-name">{{ admin.adi_soyadi }}</span>
-                    <div class="admin-avatar">
+                    <div class="admin-avatar"   (click)="toggleSidebar()" style="cursor : pointer" >
                         <img [src]="admin.avatar" (click)="toggleSidebar()" alt="Admin Avatar">
                     </div>
                 </div>
