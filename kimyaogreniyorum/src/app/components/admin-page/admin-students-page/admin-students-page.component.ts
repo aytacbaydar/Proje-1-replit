@@ -1,7 +1,7 @@
-
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 interface User {
   id: number;
@@ -37,7 +37,7 @@ export class AdminStudentsPageComponent implements OnInit {
   isLoading = true;
   activeTab: 'students' | 'teachers' | 'new' = 'students';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit(): void {
     this.loadUsers();
@@ -49,7 +49,7 @@ export class AdminStudentsPageComponent implements OnInit {
 
   loadUsers(): void {
     this.isLoading = true;
-    
+
     // LocalStorage veya sessionStorage'dan token'ı al
     let token = '';
     const userStr = localStorage.getItem('user') || sessionStorage.getItem('user');
@@ -57,7 +57,7 @@ export class AdminStudentsPageComponent implements OnInit {
       const user = JSON.parse(userStr);
       token = user.token || '';
     }
-    
+
     // Tüm kullanıcıları getir
     this.http.get<any>('./server/api/admin.php', {
       headers: { 'Authorization': `Bearer ${token}` }
@@ -76,5 +76,9 @@ export class AdminStudentsPageComponent implements OnInit {
         this.isLoading = false;
       }
     });
+  }
+
+  editStudent(id: number): void {
+    this.router.navigate(['/admin/students/edit', id]);
   }
 }
