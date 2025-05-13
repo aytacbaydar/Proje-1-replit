@@ -6,8 +6,7 @@ import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-admin-student-edit-page',
-  standalone: true,
-  imports: [CommonModule, HttpClientModule, ReactiveFormsModule, FormsModule, RouterModule],
+  standalone: false,
   templateUrl: './admin-student-edit-page.component.html',
   styleUrl: './admin-student-edit-page.component.scss'
 })
