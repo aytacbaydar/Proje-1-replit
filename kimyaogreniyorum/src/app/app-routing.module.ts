@@ -11,7 +11,8 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        loadChildren: () => import('./components/admin-page/admin-dashboard-page/admin-dashboard-page.module').then(m => m.AdminDashboardPageModule)
+        redirectTo: 'students',
+        pathMatch: 'full'
       },
       {
         path: 'students',
