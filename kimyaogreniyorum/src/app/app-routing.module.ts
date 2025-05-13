@@ -30,21 +30,7 @@ const routes: Routes = [
   },
   {
     path: 'admin',
-    loadComponent() {
-      return import(
-        './components/admin-page/admin-index-page/admin-index-page.component'
-      ).then((m) => m.AdminIndexPageComponent);
-    },
-    children: [
-      {
-        path: 'students',
-        loadComponent: () => import('./components/admin-page/admin-students-page/admin-students-page.component').then(m => m.AdminStudentsPageComponent)
-      },
-      {
-        path: 'students/edit/:id',
-        loadComponent: () => import('./components/admin-page/admin-student-edit-page/admin-student-edit-page.component').then(m => m.AdminStudentEditPageComponent)
-      }
-    ]
+    loadChildren: () => import('./components/admin-page/admin-page.module').then(m => m.AdminPageModule)
   },
 ];
 
